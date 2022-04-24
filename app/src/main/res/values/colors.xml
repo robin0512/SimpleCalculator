@@ -7,4 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="light_gray">#F5F5F5</color>
+    <color name="dark_gray">#949494</color>
+
+    <color name="addition">#540d6e</color>
+    <color name="subtraction">#ee4266</color>
+    <color name="multiplication">#ffd23f</color>
+    <color name="division">#3bceac</color>
+    <color name="equals">#0ead69</color>
 </resources>
