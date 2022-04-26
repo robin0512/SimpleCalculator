@@ -1,82 +1,142 @@
 package com.example.simplecalculator.viewModel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.simplecalculator.model.CalculatorData
+import com.example.expressionparserutil.ExpressionParserUtil
 
 class CalculatorActivityViewModel : ViewModel()  {
-    val mainDataLiveData: MutableLiveData<CalculatorData> = MutableLiveData()
-    private var mainData = CalculatorData()
+    //LiveData object used to update the UI expressions display
+    private val _displayTextLiveData = MutableLiveData<String>()
+    val displayTextLiveData: LiveData<String>
+        get() = _displayTextLiveData
 
-    fun onNumClick(keyString: String) {
-        if (mainData.newState) {
-            mainData.finalNum = ""
-            mainDataLiveData.value = mainData
+    //LiveData object used to update the UI error messages display
+    private val _errorTextLiveData = MutableLiveData<String>()
+    val errorTextLiveData: LiveData<String>
+        get() = _errorTextLiveData
+
+    //Expression parser and calculator imported via jitpack.
+    private val calculator = ExpressionParserUtil()
+
+    //Error messages to be displayed in case of invalid input
+    private val genericError = "invalid expression"
+    private val parenthesesError = "mismatched parentheses"
+    private val emptyExpressionError = "enter an expression"
+
+    //Click function for numeric input
+    fun numberInput(buttonValue: Int) {
+        if (_errorTextLiveData.value.toString().isNotEmpty()) clearErrorMessage()
+
+        val text = _displayTextLiveData.value
+        val newText = text + buttonValue.toString()
+        _displayTextLiveData.value = newText
+    }
+
+    //Click function for symbols input - it stops the user from inputting some invalid expressions.
+    fun symbolInput(symbol: String) {
+        if (_errorTextLiveData.value.toString().isNotEmpty()) clearErrorMessage()
+
+        val text = _displayTextLiveData.value!!
+
+        fun updateDisplay() {
+            val newText = "${text}$symbol"
+            _displayTextLiveData.value = newText
         }
-        mainData.newState = false
-        var totalString = mainData.finalNum
 
-        when (keyString) {
-            "." -> {
-                if (!mainData.hasPoint) {
-                    totalString += "."
-                    mainData.hasPoint = true
+        when (symbol) {
+            "÷", "x" -> if (text.isNotEmpty()) {
+                if (text.last().isDigit() || text.last() == ')') updateDisplay()
+            }
+
+            "+", "-" -> updateDisplay()
+
+            "(" -> if (text.isNotEmpty()) {
+                if (text.last() == 'x'||
+                    text.last() == '÷'||
+                    text.last() == '-'||
+                    text.last() == '+'||
+                    text.last() == '(') updateDisplay() else if (text.isNotEmpty() || text.last() == ')') {
+                    val newText = "${text}x$symbol"
+                    _displayTextLiveData.value = newText
                 }
             }
-            "+/-" -> {
-                totalString = if (totalString.startsWith("-"))
-                    totalString.replace("-", "")
-                else
-                    "-$totalString"
-            }
-            else -> totalString += keyString
 
-        }
-        mainData.finalNum = totalString
-        mainDataLiveData.value = mainData
-    }
-
-
-    fun onCalculateClick(keyString: String) {
-        mainData.calculateType = keyString
-        mainData.oldNum = mainData.finalNum
-        mainData.newState = true
-        mainData.hasPoint = false
-    }
-
-    fun onEqualClick() {
-        var finalDouble = 0.0
-        when (mainData.calculateType) {
-            "+" -> {
-                finalDouble = mainData.oldNum.toDouble() + mainData.finalNum.toDouble()
+            ")" -> if (text.isNotEmpty()) {
+                if (text.last().isDigit() ||
+                    text.last() == ')' ||
+                    text.last() == '(') updateDisplay()
             }
-            "-" -> {
-                finalDouble = mainData.oldNum.toDouble() - mainData.finalNum.toDouble()
-            }
-            "*" -> {
-                finalDouble = mainData.oldNum.toDouble() * mainData.finalNum.toDouble()
-            }
-            "/" -> {
-                finalDouble = mainData.oldNum.toDouble() / mainData.finalNum.toDouble()
+
+            "." -> if (text.isNotEmpty()) {
+                if (text.last().isDigit()) updateDisplay()
             }
         }
-        mainData.finalNum = finalDouble.toString()
-        mainData.newState = true
-        mainData.oldNum = mainData.finalNum
-        mainDataLiveData.value = mainData
     }
 
-    fun onPercentClick() {
-        mainData.finalNum = (mainData.finalNum.toDouble() / 100).toString()
-        mainData.newState = true
-        mainData.oldNum = mainData.finalNum
-        mainDataLiveData.value = mainData
+    //Delete function - deletes last character from display
+    fun delete() {
+        if (_errorTextLiveData.value.toString().isNotEmpty()) clearErrorMessage()
+
+        val text = _displayTextLiveData.value!!
+        val newText = text.dropLast(1)
+        _displayTextLiveData.value = newText
     }
 
-    fun onCleanClick() {
-        mainData = CalculatorData()
-        mainData.finalNum = "0"
-        mainDataLiveData.value = mainData
-
+    //Equal button - calls the "calc" function on the calculator object and handles
+    //invalid expressions, displaying the error on the _errorTextLiveData.
+    fun equals() {
+        if (_displayTextLiveData.value!!.isEmpty()) {
+            emptyExpressionError()
+            return
+        }
+        if (calculator.parenthesesCheck(_displayTextLiveData.value.toString())) {
+            try {
+                val expression = _displayTextLiveData.value!!
+                val result = calculator.calc(expression)
+                _displayTextLiveData.value = result
+            } catch (e: Exception) {
+                genericError()
+            }
+        } else parenthesesError()
     }
+
+    //Generic error in case of unexpected invalid expressions that might throw exceptions.
+    private fun genericError() {
+        _errorTextLiveData.value = genericError
+    }
+
+    //In case of invalid parentheses configuration
+    private fun parenthesesError() {
+        _errorTextLiveData.value = parenthesesError
+    }
+
+    private fun emptyExpressionError() {
+        _errorTextLiveData.value = emptyExpressionError
+    }
+
+    //Clear button
+    fun clear() {
+        if (_errorTextLiveData.value.toString().isNotEmpty()) clearErrorMessage()
+
+        _displayTextLiveData.value = ""
+    }
+
+    //Clears the error messages
+    private fun clearErrorMessage() {
+        _errorTextLiveData.value = ""
+    }
+
+    init {
+        _displayTextLiveData.value = ""
+    }
+
+    //Variables with symbols for xml access
+    val divisionSymbol = "÷"
+    val multiplicationSymbol = "x"
+    val plusSymbol = "+"
+    val minusSymbol = "-"
+    val opParenthesesSymbol = "("
+    val clParenthesesSymbol = ")"
+    val commaSymbol = "."
 }
