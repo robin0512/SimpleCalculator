@@ -11,7 +11,9 @@
         android:theme="@style/Theme.SimpleCalculator">
         <activity
             android:name=".CalculatorActivity"
-            android:exported="true">
+            android:exported="true"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
