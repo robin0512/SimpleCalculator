@@ -5,7 +5,6 @@
     tools:context=".CalculatorActivity">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.example.simplecalculator.viewModel.CalculatorActivityViewModel" />
