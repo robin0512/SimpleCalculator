@@ -8,81 +8,87 @@ import com.example.simplecalculator.model.CalculatorData
 
 class CalculatorActivityViewModel : ViewModel() {
 
-    private val _displayTextLiveData = MutableLiveData<String>()
     private val model = CalculatorData()
-    val displayTextLiveData: LiveData<String>
-        get() = _displayTextLiveData
+    private val _displayExpressionLiveData = MutableLiveData<String>()
+    val displayExpressionLiveData: LiveData<String>
+        get() = _displayExpressionLiveData
+
+    private val _displayTotalLiveData = MutableLiveData<String>()
+    val displayTotalLiveData: LiveData<String>
+        get() = _displayTotalLiveData
 
     init {
-        _displayTextLiveData.value = ""
+        _displayExpressionLiveData.value = ""
     }
 
     val divisionSymbol = "÷"
     val multiplicationSymbol = "x"
     val plusSymbol = "+"
     val minusSymbol = "-"
-    val opParenthesesSymbol = "("
-    val clParenthesesSymbol = ")"
+    val openParenthesesSymbol = "("
+    val closeParenthesesSymbol = ")"
     val commaSymbol = "."
 
     private val calculator = ExpressionParserUtil()
 
     fun numberInput(buttonValue: Int) {
-        model.text = _displayTextLiveData.value
-        model.newText = model.text + buttonValue.toString()
-        _displayTextLiveData.value = model.newText!!
+        val numText = _displayExpressionLiveData.value
+        val newNumText = numText + buttonValue.toString()
+        _displayExpressionLiveData.value = newNumText
+        equals()
     }
 
     fun symbolInput(symbol: String) {
-        model.text = _displayTextLiveData.value!!
-
+        val symbolText = _displayExpressionLiveData.value!!
         fun updateDisplay() {
-            model.newText = "${model.text}$symbol"
-            _displayTextLiveData.value = model.newText!!
+            val newSymbolText = "${symbolText}$symbol"
+            _displayExpressionLiveData.value = newSymbolText
         }
 
         when (symbol) {
-            "÷", "x" -> if (model.text!!.isNotEmpty()) {
-                if (model.text!!.last().isDigit() || model.text!!.last() == ')') updateDisplay()
+            "÷", "x" -> if (symbolText.isNotEmpty()) {
+                if (symbolText.last().isDigit() || symbolText.last() == ')') updateDisplay()
             }
 
             "+", "-" -> updateDisplay()
 
-            "(" -> if (model.text!!.isNotEmpty()) {
-                if (model.text!!.last() == 'x' ||
-                    model.text!!.last() == '÷' ||
-                    model.text!!.last() == '-' ||
-                    model.text!!.last() == '+' ||
-                    model.text!!.last() == '('
-                ) updateDisplay() else if (model.text!!.isNotEmpty() || model.text!!.last() == ')') {
-                    val newText = "${model.text}x$symbol"
-                    _displayTextLiveData.value = newText
+            "(" -> if (symbolText.isNotEmpty()) {
+                if (symbolText.last() == 'x' ||
+                    symbolText.last() == '÷' ||
+                    symbolText.last() == '-' ||
+                    symbolText.last() == '+' ||
+                    symbolText.last() == '('
+                ) updateDisplay() else if (symbolText.isNotEmpty() || symbolText.last() == ')') {
+                    val newText = "${symbolText}x$symbol"
+                    _displayExpressionLiveData.value = newText
                 }
             }
 
-            ")" -> if (model.text!!.isNotEmpty()) {
-                if (model.text!!.last().isDigit() ||
-                    model.text!!.last() == ')' ||
-                    model.text!!.last() == '('
+            ")" -> if (symbolText.isNotEmpty()) {
+                if (symbolText.last().isDigit() ||
+                    symbolText.last() == ')' ||
+                    symbolText.last() == '('
                 ) updateDisplay()
+                equals()
             }
 
-            "." -> if (model.text!!.isNotEmpty()) {
-                if (model.text!!.last().isDigit()) updateDisplay()
+            "." -> if (symbolText.isNotEmpty()) {
+                if (symbolText.last().isDigit()) updateDisplay()
             }
         }
     }
 
     fun equals() {
-        if (calculator.parenthesesCheck(_displayTextLiveData.value.toString())) {
-            model.expression = _displayTextLiveData.value!!
+        if (calculator.parenthesesCheck(_displayExpressionLiveData.value.toString())) {
+            model.expression = _displayExpressionLiveData.value!!
             model.result = calculator.calc(model.expression!!)
-            _displayTextLiveData.value = model.result!!
+            _displayTotalLiveData.value = model.result!!
         }
     }
 
     fun clear() {
-        _displayTextLiveData.value = ""
+        _displayExpressionLiveData.value = ""
+        _displayTotalLiveData.value = ""
     }
 
 }
