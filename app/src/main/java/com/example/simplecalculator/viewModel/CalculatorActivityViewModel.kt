@@ -1,10 +1,15 @@
 package com.example.simplecalculator.viewModel
 
+import android.R
+import android.graphics.Color
+import android.view.View
+import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.expressionparserutil.ExpressionParserUtil
 import com.example.simplecalculator.model.CalculatorData
+
 
 class CalculatorActivityViewModel : ViewModel() {
 
@@ -28,6 +33,7 @@ class CalculatorActivityViewModel : ViewModel() {
     val openParenthesesSymbol = "("
     val closeParenthesesSymbol = ")"
     val commaSymbol = "."
+    val equalClickEvent = MutableLiveData<Boolean>(false)
 
     private val calculator = ExpressionParserUtil()
 
@@ -35,7 +41,7 @@ class CalculatorActivityViewModel : ViewModel() {
         val numText = _displayExpressionLiveData.value
         val newNumText = numText + buttonValue.toString()
         _displayExpressionLiveData.value = newNumText
-        equals()
+        calculate()
     }
 
     fun symbolInput(symbol: String) {
@@ -69,7 +75,7 @@ class CalculatorActivityViewModel : ViewModel() {
                     symbolText.last() == ')' ||
                     symbolText.last() == '('
                 ) updateDisplay()
-                equals()
+                calculate()
             }
 
             "." -> if (symbolText.isNotEmpty()) {
@@ -78,12 +84,16 @@ class CalculatorActivityViewModel : ViewModel() {
         }
     }
 
-    fun equals() {
+    private fun calculate() {
         if (calculator.parenthesesCheck(_displayExpressionLiveData.value.toString())) {
             model.expression = _displayExpressionLiveData.value!!
             model.result = calculator.calc(model.expression!!)
             _displayTotalLiveData.value = model.result!!
         }
+    }
+
+    fun equalClick(){
+        equalClickEvent.value = true
     }
 
     fun clear() {
