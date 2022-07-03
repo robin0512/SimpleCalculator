@@ -17,21 +17,25 @@ class CalculatorActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding: CalculatorBinding = CalculatorBinding.inflate(layoutInflater)
-        val view= binding.root
+        val view = binding.root
         setContentView(view)
 
         val viewModel = ViewModelProvider(this).get(CalculatorActivityViewModel::class.java)
             .apply {
-            equalClickEvent.observe(this@CalculatorActivity,
-                Observer { equalClick ->
-                    if (equalClick == true) {
-                        println("equalClickTrue")
+                equalClickEvent.observe(this@CalculatorActivity,
+                    Observer { equalClick ->
+                        if (equalClick == true) {
+                            binding.motionLayout.transitionToEnd()
+                        }
+                    })
 
-                    }else
-                        println("equalClickFalse")
-
-                })
-        }
+                resetTextSize.observe(this@CalculatorActivity,
+                    Observer { equalClick ->
+                        if (equalClick == true) {
+                            binding.motionLayout.transitionToStart()
+                        }
+                    })
+            }
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this

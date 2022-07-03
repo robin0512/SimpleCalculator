@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="300">
+        <KeyFrameSet></KeyFrameSet>
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:id="@+id/expression"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_marginRight="15dp"
+            app:layout_constraintBottom_toTopOf="@+id/total"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+            <CustomAttribute
+                motion:attributeName="textSize"
+                motion:customDimension="18sp" />
+            <CustomAttribute
+                motion:attributeName="textColor"
+                motion:customColorValue="@color/black"/>
+        </Constraint>
+        <Constraint
+            android:id="@+id/total"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent">
+            <CustomAttribute
+                motion:attributeName="textSize"
+                motion:customDimension="10sp" />
+            <CustomAttribute
+                motion:attributeName="textColor"
+                motion:customColorValue="@color/dark_gray"/>
+        </Constraint>
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/expression"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_marginRight="15dp"
+            app:layout_constraintBottom_toTopOf="@+id/total"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+            <CustomAttribute
+                motion:attributeName="textSize"
+                motion:customDimension="10sp" />
+            <CustomAttribute
+                motion:attributeName="textColor"
+                motion:customColorValue="@color/dark_gray"/>
+        </Constraint>
+        <Constraint
+            android:id="@+id/total"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent">
+            <CustomAttribute
+                motion:attributeName="textSize"
+                motion:customDimension="18sp" />
+            <CustomAttribute
+                motion:attributeName="textColor"
+                motion:customColorValue="@color/black"/>
+        </Constraint>
+    </ConstraintSet>
+</MotionScene>

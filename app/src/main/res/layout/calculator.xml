@@ -359,10 +359,12 @@
             app:layout_constraintStart_toEndOf="@+id/point"
             app:layout_constraintTop_toBottomOf="@+id/add" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.constraintlayout.motion.widget.MotionLayout
+            android:id="@+id/motionLayout"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/light_gray"
+            app:layoutDescription="@xml/calculator_xml_motion_layout_scene"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -371,8 +373,7 @@
             <TextView
                 android:id="@+id/expression"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_marginRight="15dp"
+                android:layout_height="120dp"
                 android:gravity="center_vertical|right"
                 android:text="@{viewModel.displayExpressionLiveData}"
                 android:textColor="@color/black"
@@ -380,15 +381,12 @@
                 app:layout_constraintBottom_toTopOf="@+id/total"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0"
                 tools:text="10-((3+3)×(3÷1.5))" />
 
             <TextView
                 android:id="@+id/total"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_marginRight="15dp"
                 android:layout_marginBottom="8dp"
                 android:gravity="center_vertical|right"
                 android:text="@{viewModel.displayTotalLiveData}"
@@ -398,9 +396,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:text="100.05" />
+                tools:text="-2.0" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.motion.widget.MotionLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

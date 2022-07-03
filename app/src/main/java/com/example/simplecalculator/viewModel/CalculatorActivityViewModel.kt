@@ -34,6 +34,7 @@ class CalculatorActivityViewModel : ViewModel() {
     val closeParenthesesSymbol = ")"
     val commaSymbol = "."
     val equalClickEvent = MutableLiveData<Boolean>(false)
+    val resetTextSize = MutableLiveData<Boolean>(false)
 
     private val calculator = ExpressionParserUtil()
 
@@ -92,13 +93,14 @@ class CalculatorActivityViewModel : ViewModel() {
         }
     }
 
-    fun equalClick(){
+    fun equalClick() {
         equalClickEvent.value = true
     }
 
     fun clear() {
         _displayExpressionLiveData.value = ""
         _displayTotalLiveData.value = ""
+        resetTextSize.value = true
     }
 
 }
