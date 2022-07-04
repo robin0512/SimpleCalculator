@@ -14,17 +14,18 @@
         <Constraint
             android:id="@+id/expression"
             android:layout_width="0dp"
-            android:layout_height="120dp"
+            android:layout_height="130dp"
             android:layout_marginRight="15dp"
             app:layout_constraintBottom_toTopOf="@+id/total"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginEnd="24dp">
             <CustomAttribute
                 motion:attributeName="textSize"
                 motion:customDimension="18sp" />
             <CustomAttribute
                 motion:attributeName="textColor"
-                motion:customColorValue="@color/black"/>
+                motion:customColorValue="@color/text_color"/>
         </Constraint>
         <Constraint
             android:id="@+id/total"
@@ -35,7 +36,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginEnd="24dp">
             <CustomAttribute
                 motion:attributeName="textSize"
                 motion:customDimension="10sp" />
@@ -49,11 +51,12 @@
         <Constraint
             android:id="@+id/expression"
             android:layout_width="0dp"
-            android:layout_height="120dp"
+            android:layout_height="130dp"
             android:layout_marginRight="15dp"
             app:layout_constraintBottom_toTopOf="@+id/total"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginEnd="24dp">
             <CustomAttribute
                 motion:attributeName="textSize"
                 motion:customDimension="10sp" />
@@ -70,13 +73,14 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginEnd="24dp">
             <CustomAttribute
                 motion:attributeName="textSize"
                 motion:customDimension="18sp" />
             <CustomAttribute
                 motion:attributeName="textColor"
-                motion:customColorValue="@color/black"/>
+                motion:customColorValue="@color/text_color"/>
         </Constraint>
     </ConstraintSet>
 </MotionScene>

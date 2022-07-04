@@ -5,11 +5,11 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="text_color">#FF000000</color>
-    <color name="bg_color_layout">#FFFFFFFF</color>
-    <color name="result_layout">#F5F5F5</color>
+    <color name="text_color">#FFFFFF</color>
+    <color name="bg_color_layout">#272727</color>
+    <color name="result_layout">#000000</color>
     <color name="dark_gray">#949494</color>
-    <color name="clean_btn">#B22222</color>
+    <color name="clean_btn">#FDD835</color>
 
     <color name="addition">#540d6e</color>
     <color name="subtraction">#ee4266</color>

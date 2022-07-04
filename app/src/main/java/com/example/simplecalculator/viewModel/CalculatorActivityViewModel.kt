@@ -89,6 +89,10 @@ class CalculatorActivityViewModel : ViewModel() {
         if (calculator.parenthesesCheck(_displayExpressionLiveData.value.toString())) {
             model.expression = _displayExpressionLiveData.value!!
             model.result = calculator.calc(model.expression!!)
+            if(model.result!!.indexOf(".") > 0){
+                model.result = model.result!!.replace(Regex("0+?$"), "")
+                model.result = model.result!!.replace(Regex("[.]$"), "")
+            }
             _displayTotalLiveData.value = model.result!!
         }
     }
