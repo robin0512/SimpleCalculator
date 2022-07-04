@@ -1,15 +1,10 @@
 package com.example.simplecalculator.viewModel
 
-import android.R
-import android.graphics.Color
-import android.view.View
-import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.expressionparserutil.ExpressionParserUtil
 import com.example.simplecalculator.model.CalculatorData
-
 
 class CalculatorActivityViewModel : ViewModel() {
 
