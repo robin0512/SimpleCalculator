@@ -28,5 +28,7 @@ https://github.com/jfransp/ExpressionParserUtil-Android-Library
 ```
 
 ## Dark themes
-![darkThemes](https://user-images.githubusercontent.com/53432684/177310363-24f904ad-3f5b-4acc-be25-46a3a2fe7fe0.jpg)
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/53432684/177310363-24f904ad-3f5b-4acc-be25-46a3a2fe7fe0.jpg" width="200" />
+</p>
 
