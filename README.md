@@ -3,7 +3,7 @@ Simple Calculator in Android MVVM
 
 A calculator app using LiveData and DataBinding for solving mathematical expressions.
 
-## Screenshorts
+## App Screen Recording
 
 ![sample](https://user-images.githubusercontent.com/53432684/177303239-784507a1-3418-4d80-9c60-0b59fb6f129d.gif)
 
